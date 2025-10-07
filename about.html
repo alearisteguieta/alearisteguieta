@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - EAF Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy-dark: #0A2540;
+            --navy-medium: #1A3A52;
+            --blue-bright: #2E5CFF;
+            --blue-vivid: #0066FF;
+            --cyan: #00D4FF;
+            --white: #FFFFFF;
+            --gray-light: #E8EBF0;
+            --gray-medium: #8A94A6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--white);
+            background-color: var(--navy-dark);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .container-narrow {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--navy-dark);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-size: 0.9rem;
+            font-weight: 400;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0 3rem;
+            text-align: center;
+        }
+
+        .hero-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-medium);
+            max-width: 700px;
+            margin: 0 auto 1rem;
+            line-height: 1.7;
+        }
+
+        .hero-description {
+            font-size: 1rem;
+            color: var(--gray-medium);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--gray-medium);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Values Grid */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .value-card {
+            background: var(--navy-medium);
+            padding: 2.5rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--blue-bright);
+            transition: transform 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .value-number {
+            font-size: 2rem;
+            color: var(--blue-bright);
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .value-card h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .value-card p {
+            color: var(--gray-medium);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Manifesto Section */
+        .manifesto {
+            background: var(--navy-medium);
+            padding: 5rem 0;
+            margin: 4rem 0;
+            border-radius: 16px;
+        }
+
+        .manifesto-icon {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .manifesto h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .manifesto-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 3rem;
+        }
+
+        .manifesto-content p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--gray-light);
+            margin-bottom: 1.8rem;
+        }
+
+        .manifesto-highlight {
+            font-weight: 500;
+            color: var(--white);
+        }
+
+        /* Pillars Section */
+        .pillars-section {
+            padding: 4rem 0;
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pillar-card {
+            background: var(--navy-medium);
+            padding: 2.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .pillar-card h4 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--blue-bright);
+        }
+
+        .pillar-card p {
+            color: var(--gray-medium);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--navy-dark);
+            padding: 4rem 0 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 6rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+        }
+
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            opacity: 0.7;
+            font-size: 0.9rem;
+            transition: opacity 0.3s;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: var(--gray-medium);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 968px) {
+            .values-grid,
+            .pillars-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .manifesto-content {
+                padding: 0 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">EAF Project</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#mission">Mission</a></li>
+                <li><a href="#values">Values</a></li>
+                <li><a href="#manifesto">Manifesto</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container-narrow">
+            <div class="hero-icon">🌐</div>
+            <h1>EAF Project</h1>
+            <p class="hero-subtitle"><strong>Education, Art & Finance</strong></p>
+            <p class="hero-description">An interdisciplinary initiative dedicated to fostering ethical, fluent, and practical integration of Artificial Intelligence.</p>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="section" id="mission">
+        <div class="container-narrow">
+            <div class="section-icon">🎯</div>
+            <h2 class="section-title">Mission</h2>
+            <div class="section-content">
+                <p>To promote a deep, practical, and ethical understanding of artificial intelligence within education, art, and finance by creating an open knowledge base, didactic and experimental tools, and collaborative spaces that enhance human development alongside technology.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section class="section">
+        <div class="container-narrow">
+            <div class="section-icon">👁️</div>
+            <h2 class="section-title">Vision</h2>
+            <div class="section-content">
+                <p>To become a global reference in responsible AI learning and application— inspiring a new generation of individuals and organizations capable of integrating AI with fluency, creativity, and ethical awareness, shaping a more harmonious, sustainable, and conscious future.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="section" id="values">
+        <div class="container">
+            <div class="section-icon">💎</div>
+            <h2 class="section-title">Core Values</h2>
+            
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-number">1</div>
+                    <h3>Ethics and Responsibility</h3>
+                    <p>Every technological innovation must be guided by principles that prioritize human well-being and social balance.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-number">2</div>
+                    <h3>Digital Fluency</h3>
+                    <p>We encourage a natural, mindful, and collaborative relationship between humans and AI — a new form of 21st-century literacy.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-number">3</div>
+                    <h3>Continuous Learning</h3>
+                    <p>We value curiosity, experimentation, and lifelong learning as essential paths for personal and collective growth.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-number">4</div>
+                    <h3>Creativity and Art</h3>
+                    <p>We embrace art as a vital space for human expression and co-creation with AI, expanding aesthetics, media, and meaning.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-number">5</div>
+                    <h3>Responsible Innovation</h3>
+                    <p>We promote the intelligent and sustainable use of technology in educational, artistic, and financial contexts to create positive impact.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-number">6</div>
+                    <h3>Collaboration and Community</h3>
+                    <p>We believe in collective intelligence and shared knowledge as the driving forces of meaningful progress.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Manifesto Section -->
+    <section class="container" id="manifesto">
+        <div class="manifesto">
+            <div class="manifesto-icon">🜂</div>
+            <h2>EAF Project Manifesto</h2>
+            
+            <div class="manifesto-content">
+                <p><span class="manifesto-highlight">EAF stands for Education, Art, and Finance</span> — three pillars that, beyond being fields of study, embody the dimensions where artificial intelligence can most profoundly transform the way we learn, create, and generate value.</p>
+
+                <p>We believe we are living through a historical turning point — the moment when AI stops being an external tool and becomes a natural extension of human thought. Its integration into education, the arts, and finance will define the new frameworks of learning, creation, and collective development.</p>
+
+                <p>From this conviction, the EAF Project emerges as an open and collaborative initiative aimed at building an informative, practical, and didactic knowledge base that serves as a reference for the conscious and ethical use of technology. We seek to foster a state of <span class="manifesto-highlight">fluency with AI</span> — a relationship where people understand, integrate, and collaborate with intelligent systems in a harmonious and meaningful way.</p>
+
+                <p><span class="manifesto-highlight">In Education,</span> we promote new ways of learning through methodologies that position AI as a guide, assistant, and catalyst for human curiosity. <span class="manifesto-highlight">In Art,</span> we explore its power as a creative and expressive medium capable of expanding languages, aesthetics, and forms of representation. <span class="manifesto-highlight">In Finance,</span> we embrace its precision and transparency as tools for innovation and the creation of a more conscious and equitable economy.</p>
+
+                <p>The EAF Project does not aim to replace what is human, but to amplify it. We believe in a shared intelligence — human and artificial, ethical and creative, individual and collective. Our mission is to accompany the transition toward an era where AI is not feared but understood as a partner in evolution.</p>
+
+                <p><span class="manifesto-highlight">This is the foundation of the EAF Project:</span> a space to learn, create, and thrive alongside artificial intelligence — guided by consciousness, ethics, and inspiration.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three Pillars Detail -->
+    <section class="pillars-section">
+        <div class="container">
+            <h2 class="section-title">The Three Pillars</h2>
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <h4>📚 Education</h4>
+                    <p>AI as a guide, assistant, and catalyst for human curiosity, transforming methodologies and fostering personalized, ethical learning experiences.</p>
+                </div>
+                <div class="pillar-card">
+                    <h4>🎨 Art</h4>
+                    <p>A creative and expressive medium that expands languages, aesthetics, and forms of representation through human-AI collaboration.</p>
+                </div>
+                <div class="pillar-card">
+                    <h4>💰 Finance</h4>
+                    <p>Precision and transparency tools for innovation, building a more conscious, equitable, and sustainable economic future.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About</h4>
+                    <a href="#mission">Our Mission</a>
+                    <a href="#values">Core Values</a>
+                    <a href="#manifesto">Manifesto</a>
+                    <a href="#">Team</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="#">Playbooks</a>
+                    <a href="#">Experiments</a>
+                    <a href="#">Tutorials</a>
+                    <a href="#">Articles</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <a href="#">GitHub</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Newsletter</a>
+                    <a href="#">Events</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <a href="#">Get in touch</a>
+                    <a href="#">Support</a>
+                    <a href="#">Press</a>
+                    <a href="#">Careers</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EAF Project. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
