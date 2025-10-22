@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources Library - EAF Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy-dark: #0A2540;
+            --navy-medium: #1A3A52;
+            --blue-bright: #2E5CFF;
+            --blue-vivid: #0066FF;
+            --cyan: #00D4FF;
+            --white: #FFFFFF;
+            --gray-light: #E8EBF0;
+            --gray-medium: #8A94A6;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--white);
+            background-color: var(--navy-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes drift {
+            from {
+                transform: translate(0, 0);
+            }
+            to {
+                transform: translate(20px, 20px);
+            }
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        /* Scroll Animation Classes */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-animate.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(10, 37, 64, 0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        header.scrolled {
+            padding: 0.7rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            background-color: rgba(10, 37, 64, 0.98);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: -0.5px;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo:hover {
+            color: var(--cyan);
+            transform: translateY(-1px);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-size: 0.9rem;
+            font-weight: 400;
+            opacity: 0.8;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyan), var(--blue-bright));
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--cyan);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(46, 92, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--white) 0%, var(--cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-medium);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Search and Filter Section */
+        .library-controls {
+            background: var(--navy-medium);
+            padding: 2.5rem;
+            border-radius: 8px;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .library-controls::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(46, 92, 255, 0.05) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .library-controls > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.9rem 1.2rem;
+            background: var(--navy-dark);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            color: var(--white);
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .search-button {
+            padding: 0.9rem 2rem;
+            background: var(--blue-bright);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .search-button:hover::before {
+            left: 100%;
+        }
+
+        .search-button:hover {
+            background: var(--blue-vivid);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(46, 92, 255, 0.4);
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-label {
+            font-size: 0.9rem;
+            color: var(--gray-medium);
+            margin-right: 0.5rem;
+        }
+
+        .filter-button {
+            padding: 0.6rem 1.2rem;
+            background: var(--navy-dark);
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .filter-button:hover,
+        .filter-button.active {
+            background: var(--blue-bright);
+            border-color: var(--blue-bright);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 92, 255, 0.3);
+        }
+
+        /* Library Stats */
+        .library-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: var(--navy-medium);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            border-top: 3px solid var(--blue-bright);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(46, 92, 255, 0) 0%, rgba(46, 92, 255, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(46, 92, 255, 0.3);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--blue-bright);
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        .stat-card:hover .stat-number {
+            color: var(--cyan);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray-medium);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3rem 0 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 400;
+        }
+
+        .view-all {
+            color: var(--blue-bright);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.3s, gap 0.3s;
+        }
+
+        .view-all:hover {
+            opacity: 0.8;
+            gap: 1rem;
+        }
+
+        /* Resource Grid */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-card {
+            background: var(--navy-medium);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(46, 92, 255, 0) 0%, rgba(46, 92, 255, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .resource-card:hover::before {
+            opacity: 1;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(46, 92, 255, 0.3);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .resource-cover {
+            height: 200px;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resource-cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+            animation: drift 20s linear infinite;
+        }
+
+        .resource-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            z-index: 2;
+        }
+
+        .resource-content {
+            padding: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .resource-category {
+            display: inline-block;
+            font-size: 0.75rem;
+            color: var(--blue-bright);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .resource-content h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+            transition: color 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .resource-card:hover .resource-content h3 {
+            color: var(--cyan);
+        }
+
+        .resource-content p {
+            color: var(--gray-medium);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        .resource-card:hover .resource-content p {
+            color: var(--white);
+        }
+
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .resource-info {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--gray-medium);
+        }
+
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--blue-bright);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .download-button:hover::before {
+            left: 100%;
+        }
+
+        .download-button:hover {
+            background: var(--blue-vivid);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 92, 255, 0.4);
+        }
+
+        /* Featured Section */
+        .featured-section {
+            background: var(--navy-medium);
+            padding: 3rem;
+            border-radius: 16px;
+            margin: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .featured-section:hover {
+            border-color: rgba(0, 212, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .featured-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(46, 92, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .featured-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .featured-text h2 {
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .featured-text p {
+            color: var(--gray-medium);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2rem;
+            background: var(--blue-bright);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .featured-button:hover::before {
+            left: 100%;
+        }
+
+        .featured-button:hover {
+            background: var(--blue-vivid);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(46, 92, 255, 0.4);
+        }
+
+        .featured-image {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            height: 250px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid2" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid2)"/></svg>');
+            opacity: 0.3;
+            animation: drift 20s linear infinite;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--navy-dark);
+            padding: 4rem 0 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 6rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+        }
+
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            opacity: 0.7;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-section a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--cyan);
+            transition: width 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+            color: var(--cyan);
+            transform: translateX(5px);
+        }
+
+        .footer-section a:hover::after {
+            width: 100%;
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: var(--gray-medium);
+            font-size: 0.85rem;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Enhanced responsive design */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 2rem;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .resource-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .library-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .featured-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filters {
+                justify-content: center;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .library-controls {
+                padding: 2rem;
+            }
+
+            .featured-section {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <nav class="container">
+            <div class="logo">EAF Project</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-icon fade-in-up">📚</div>
+            <h1 class="fade-in-up" style="animation-delay: 0.1s;">Resource Library</h1>
+            <p class="hero-subtitle fade-in-up" style="animation-delay: 0.2s;">Explore our curated collection of playbooks, tutorials, experiments, and research on ethical AI implementation</p>
+        </div>
+    </section>
+
+    <!-- Library Controls -->
+    <section class="container">
+        <div class="library-controls scroll-animate">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search playbooks, tutorials, articles...">
+                <button class="search-button">Search</button>
+            </div>
+            <div class="filters">
+                <span class="filter-label">Filter by:</span>
+                <button class="filter-button active">All</button>
+                <button class="filter-button">Playbooks</button>
+                <button class="filter-button">Experiments</button>
+                <button class="filter-button">Tutorials</button>
+                <button class="filter-button">Articles</button>
+                <button class="filter-button">Research</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Library Stats -->
+    <section class="container">
+        <div class="library-stats">
+            <div class="stat-card scroll-animate">
+                <div class="stat-number">47</div>
+                <div class="stat-label">Playbooks</div>
+            </div>
+            <div class="stat-card scroll-animate" style="transition-delay: 0.1s;">
+                <div class="stat-number">124</div>
+                <div class="stat-label">Tutorials</div>
+            </div>
+            <div class="stat-card scroll-animate" style="transition-delay: 0.2s;">
+                <div class="stat-number">89</div>
+                <div class="stat-label">Experiments</div>
+            </div>
+            <div class="stat-card scroll-animate" style="transition-delay: 0.3s;">
+                <div class="stat-number">156</div>
+                <div class="stat-label">Articles</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Resource -->
+    <section class="container">
+        <div class="featured-section scroll-animate">
+            <div class="featured-content">
+                <div class="featured-text">
+                    <h2>Featured: Complete AI Ethics Framework</h2>
+                    <p>A comprehensive guide to implementing ethical AI practices in your organization. This playbook covers bias detection, transparency protocols, accountability measures, and stakeholder engagement strategies.</p>
+                    <a href="#" class="featured-button">Download Playbook →</a>
+                </div>
+                <div class="featured-image">
+                    ⚖️
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Playbooks Section -->
+    <section class="container">
+        <div class="section-header scroll-animate">
+            <h2>📖 Playbooks</h2>
+            <a href="#" class="view-all">View all playbooks →</a>
+        </div>
+        
+        <div class="resource-grid">
+            <div class="resource-card scroll-animate">
+                <div class="resource-cover" style="background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);">
+                    <span style="position: relative; z-index: 1;">🎓</span>
+                </div>
+                <div class="resource-badge">PDF</div>
+                <div class="resource-content">
+                    <span class="resource-category">Education</span>
+                    <h3>AI-Powered Personalized Learning</h3>
+                    <p>Step-by-step framework for implementing adaptive learning systems in educational institutions.</p>
+                    <div class="resource-meta">
+                        <div class="resource-info">
+                            <span>💻 Python</span>
+                            <span>⭐ 234</span>
+                        </div>
+                        <button class="download-button">
+                            View Code
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resource-card scroll-animate" style="transition-delay: 0.1s;">
+                <div class="resource-cover" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">
+                    <span style="position: relative; z-index: 1;">📊</span>
+                </div>
+                <div class="resource-badge">CODE</div>
+                <div class="resource-content">
+                    <span class="resource-category">Experiment</span>
+                    <h3>Explainable AI Dashboard</h3>
+                    <p>Build transparent AI systems with this interactive dashboard showing model decision-making processes.</p>
+                    <div class="resource-meta">
+                        <div class="resource-info">
+                            <span>💻 React</span>
+                            <span>⭐ 189</span>
+                        </div>
+                        <button class="download-button">
+                            View Code
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resource-card scroll-animate" style="transition-delay: 0.2s;">
+                <div class="resource-cover" style="background: linear-gradient(135deg, #ea580c 0%, #fb923c 100%);">
+                    <span style="position: relative; z-index: 1;">🤖</span>
+                </div>
+                <div class="resource-badge">CODE</div>
+                <div class="resource-content">
+                    <span class="resource-category">Experiment</span>
+                    <h3>AI-Human Collaboration Patterns</h3>
+                    <p>Case study and code examining optimal workflows for human-AI collaborative decision making.</p>
+                    <div class="resource-meta">
+                        <div class="resource-info">
+                            <span>💻 Jupyter</span>
+                            <span>⭐ 156</span>
+                        </div>
+                        <button class="download-button">
+                            View Code
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tutorials Section -->
+    <section class="container">
+        <div class="section-header scroll-animate">
+            <h2>🎓 Tutorials</h2>
+            <a href="#" class="view-all">View all tutorials →</a>
+        </div>
+        
+        <div class="resource-grid">
+            <div class="resource-card scroll-animate">
+                <div class="resource-cover" style="background: linear-gradient(135deg, #4f46e5 0%, #818cf8 100%);">
+                    <span style="position: relative; z-index: 1;">📚</span>
+                </div>
+                <div class="resource-badge">VIDEO</div>
+                <div class="resource-content">
+                    <span class="resource-category">Tutorial</span>
+                    <h3>Introduction to AI Fluency</h3>
+                    <p>Beginner-friendly course on understanding and effectively communicating with AI systems.</p>
+                    <div class="resource-meta">
+                        <div class="resource-info">
+                            <span>🎥 45 min</span>
+                            <span>👥 2.1K</span>
+                        </div>
+                        <button class="download-button">
+                            Watch
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resource-card scroll-animate" style="transition-delay: 0.1s;">
+                <div class="resource-cover" style="background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);">
+                    <span style="position: relative; z-index: 1;">⚡</span>
+                </div>
+                <div class="resource-badge">INTERACTIVE</div>
+                <div class="resource-content">
+                    <span class="resource-category">Tutorial</span>
+                    <h3>Building Your First Ethical AI System</h3>
+                    <p>Hands-on tutorial covering the complete lifecycle of developing AI with ethical considerations.</p>
+                    <div class="resource-meta">
+                        <div class="resource-info">
+                            <span>⏱️ 3 hours</span>
+                            <span>👥 1.8K</span>
+                        </div>
+                        <button class="download-button">
+                            Start
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resource-card scroll-animate" style="transition-delay: 0.2s;">
+                <div class="resource-cover" style="background: linear-gradient(135deg, #be185d 0%, #ec4899 100%);">
+                    <span style="position: relative; z-index: 1;">🎬</span>
+                </div>
+                <div class="resource-badge">VIDEO</div>
+                <div class="resource-content">
+                    <span class="resource-category">Tutorial</span>
+                    <h3>AI for Creative Expression</h3>
+                    <p>Master AI tools for artistic creation while maintaining your unique creative voice and vision.</p>
+                    <div class="resource-meta">
+                        <div class="resource-info">
+                            <span>🎥 1.5 hours</span>
+                            <span>👥 3.4K</span>
+                        </div>
+                        <button class="download-button">
+                            Watch
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About</h4>
+                    <a href="about.html">Our Mission</a>
+                    <a href="about.html#values">Core Values</a>
+                    <a href="about.html#manifesto">Manifesto</a>
+                    <a href="#">Team</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="#">Playbooks</a>
+                    <a href="#">Experiments</a>
+                    <a href="#">Tutorials</a>
+                    <a href="#">Articles</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <a href="#">GitHub</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Newsletter</a>
+                    <a href="#">Events</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <a href="contact.html">Get in touch</a>
+                    <a href="#">Support</a>
+                    <a href="#">Press</a>
+                    <a href="#">Careers</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EAF Project. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Scroll animation observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll-animate elements
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Enhanced scroll effects
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // Filter buttons functionality
+        const filterButtons = document.querySelectorAll('.filter-button');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Enhanced search input animation
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('focus', function() {
+            this.parentElement.style.transform = 'scale(1.02)';
+            this.parentElement.style.transition = 'transform 0.3s ease';
+        });
+
+        searchInput.addEventListener('blur', function() {
+            this.parentElement.style.transform = 'scale(1)';
+        });
+
+        // Add typing effect to search
+        searchInput.addEventListener('input', function() {
+            if (this.value.length > 0) {
+                this.style.borderColor = 'var(--cyan)';
+                this.style.boxShadow = '0 0 0 3px rgba(0, 212, 255, 0.1)';
+            } else {
+                this.style.borderColor = 'rgba(255,255,255,0.2)';
+                this.style.boxShadow = 'none';
+            }
+        });
+
+        // Enhanced card hover effects
+        document.querySelectorAll('.resource-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>📄 45 pages</span>
+                            <span>⏱️ 2.3 MB</span>
+                        </div>
+                        <button class="download-button">
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resource-card scroll-animate" style="transition-delay: 0.1s;">
+                <div class="resource-cover" style="background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);">
+                    <span style="position: relative; z-index: 1;">🎨</span>
+                </div>
+                <div class="resource-badge">PDF</div>
+                <div class="resource-content">
+                    <span class="resource-category">Art</span>
+                    <h3>Generative AI for Creative Workflows</h3>
+                    <p>Practical guide for artists integrating AI tools into their creative process while maintaining authenticity.</p>
+                    <div class="resource-meta">
+                        <div class="resource-info">
+                            <span>📄 38 pages</span>
+                            <span>⏱️ 1.8 MB</span>
+                        </div>
+                        <button class="download-button">
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resource-card scroll-animate" style="transition-delay: 0.2s;">
+                <div class="resource-cover" style="background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);">
+                    <span style="position: relative; z-index: 1;">💰</span>
+                </div>
+                <div class="resource-badge">PDF</div>
+                <div class="resource-content">
+                    <span class="resource-category">Finance</span>
+                    <h3>AI Risk Management in Financial Services</h3>
+                    <p>Comprehensive playbook for implementing AI-driven risk assessment and fraud detection systems.</p>
+                    <div class="resource-meta">
+                        <div class="resource-info">
+                            <span>📄 52 pages</span>
+                            <span>⏱️ 2.7 MB</span>
+                        </div>
+                        <button class="download-button">
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiments Section -->
+    <section class="container">
+        <div class="section-header scroll-animate">
+            <h2>🧪 Experiments</h2>
+            <a href="#" class="view-all">View all experiments →</a>
+        </div>
+        
+        <div class="resource-grid">
+            <div class="resource-card scroll-animate">
+                <div class="resource-cover" style="background: linear-gradient(135deg, #db2777 0%, #f472b6 100%);">
+                    <span style="position: relative; z-index: 1;">🔬</span>
+                </div>
+                <div class="resource-badge">CODE</div>
+                <div class="resource-content">
+                    <span class="resource-category">Experiment</span>
+                    <h3>Bias Detection in Language Models</h3>
+                    <p>Interactive experiment exploring bias patterns in AI language models with practical mitigation strategies.</p>
+                    <div class="resource-meta">
+                        <div class="resource-info">
+                            <span>
