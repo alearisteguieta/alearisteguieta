@@ -22,11 +22,14 @@
             --gray-medium: #8A94A6;
         }
 
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
             color: var(--white);
             background-color: var(--navy-dark);
+            overflow-x: hidden;
         }
 
         .container {
@@ -35,15 +38,76 @@
             padding: 0 40px;
         }
 
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        /* Scroll Animation Classes */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-animate.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* Header */
         header {
-            background-color: var(--navy-dark);
+            background-color: rgba(10, 37, 64, 0.95);
             border-bottom: 1px solid rgba(255,255,255,0.1);
             padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        header.scrolled {
+            padding: 0.7rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            background-color: rgba(10, 37, 64, 0.98);
         }
 
         nav {
@@ -57,6 +121,13 @@
             font-weight: 600;
             color: var(--white);
             letter-spacing: -0.5px;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo:hover {
+            color: var(--cyan);
+            transform: translateY(-1px);
         }
 
         .nav-links {
@@ -72,17 +143,49 @@
             font-size: 0.9rem;
             font-weight: 400;
             opacity: 0.8;
-            transition: opacity 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyan), var(--blue-bright));
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .nav-links a:hover {
             opacity: 1;
+            color: var(--cyan);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         /* Hero Section */
         .hero {
             padding: 5rem 0 4rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(46, 92, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
         }
 
         .hero h1 {
@@ -90,6 +193,10 @@
             font-weight: 300;
             line-height: 1.2;
             margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--white) 0%, var(--cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero-subtitle {
@@ -116,7 +223,32 @@
         .contact-form {
             background: var(--navy-medium);
             padding: 3rem;
-            border-radius: 8px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .contact-form:hover {
+            border-color: rgba(0, 212, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-form::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(46, 92, 255, 0.05) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .contact-form > * {
+            position: relative;
+            z-index: 1;
         }
 
         .form-group {
@@ -139,18 +271,20 @@
             padding: 0.9rem 1rem;
             background: var(--navy-dark);
             border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 4px;
+            border-radius: 8px;
             color: var(--white);
             font-size: 0.95rem;
             font-family: inherit;
-            transition: border-color 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: var(--blue-bright);
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+            transform: translateY(-2px);
         }
 
         .form-group textarea {
@@ -164,16 +298,34 @@
             background: var(--blue-bright);
             color: var(--white);
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             font-size: 1rem;
             font-weight: 500;
             cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-button:hover::before {
+            left: 100%;
         }
 
         .submit-button:hover {
             background: var(--blue-vivid);
             transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(46, 92, 255, 0.4);
         }
 
         /* Contact Info */
@@ -186,8 +338,33 @@
         .info-card {
             background: var(--navy-medium);
             padding: 2rem;
-            border-radius: 8px;
+            border-radius: 12px;
             border-left: 3px solid var(--blue-bright);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(46, 92, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .info-card:hover::before {
+            left: 100%;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(46, 92, 255, 0.3);
+            border-color: rgba(0, 212, 255, 0.3);
         }
 
         .info-card h3 {
@@ -197,6 +374,13 @@
             display: flex;
             align-items: center;
             gap: 0.8rem;
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        .info-card:hover h3 {
+            color: var(--cyan);
         }
 
         .info-card-icon {
@@ -208,16 +392,22 @@
             font-size: 0.95rem;
             line-height: 1.7;
             margin-bottom: 0.8rem;
+            position: relative;
+            z-index: 1;
         }
 
         .info-card a {
             color: var(--blue-bright);
             text-decoration: none;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s, transform 0.3s;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
         }
 
         .info-card a:hover {
             opacity: 0.8;
+            transform: translateX(5px);
         }
 
         /* Social Links */
@@ -237,20 +427,43 @@
             justify-content: center;
             text-decoration: none;
             font-size: 1.2rem;
-            transition: transform 0.3s, background 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .social-link:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px) scale(1.1);
             background: var(--blue-bright);
+            box-shadow: 0 10px 20px rgba(46, 92, 255, 0.3);
+            border-color: var(--cyan);
         }
 
         /* FAQ Section */
         .faq-section {
             background: var(--navy-medium);
             padding: 4rem;
-            border-radius: 12px;
+            border-radius: 16px;
             margin: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .faq-section:hover {
+            border-color: rgba(0, 212, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .faq-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(46, 92, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
         }
 
         .faq-section h2 {
@@ -258,18 +471,48 @@
             font-weight: 400;
             margin-bottom: 2.5rem;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         .faq-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
         .faq-item {
             background: var(--navy-dark);
             padding: 2rem;
-            border-radius: 6px;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .faq-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(46, 92, 255, 0) 0%, rgba(46, 92, 255, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .faq-item:hover::before {
+            opacity: 1;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(46, 92, 255, 0.3);
+            border-color: rgba(0, 212, 255, 0.3);
         }
 
         .faq-item h4 {
@@ -277,12 +520,21 @@
             font-weight: 500;
             margin-bottom: 0.8rem;
             color: var(--blue-bright);
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        .faq-item:hover h4 {
+            color: var(--cyan);
         }
 
         .faq-item p {
             color: var(--gray-medium);
             font-size: 0.9rem;
             line-height: 1.6;
+            position: relative;
+            z-index: 1;
         }
 
         /* CTA Section */
@@ -312,15 +564,35 @@
             padding: 0.9rem 2rem;
             text-decoration: none;
             border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 4px;
+            border-radius: 8px;
             font-weight: 500;
             font-size: 0.95rem;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
         }
 
         .cta-button:hover {
             background-color: rgba(255,255,255,0.1);
-            border-color: var(--white);
+            border-color: var(--cyan);
+            color: var(--cyan);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2);
         }
 
         /* Footer */
@@ -354,11 +626,29 @@
             margin-bottom: 0.8rem;
             opacity: 0.7;
             font-size: 0.9rem;
-            transition: opacity 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-section a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--cyan);
+            transition: width 0.3s ease;
         }
 
         .footer-section a:hover {
             opacity: 1;
+            color: var(--cyan);
+            transform: translateX(5px);
+        }
+
+        .footer-section a:hover::after {
+            width: 100%;
         }
 
         .footer-bottom {
@@ -369,10 +659,23 @@
             font-size: 0.85rem;
         }
 
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Enhanced responsive design */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 2rem;
+            }
+        }
+
         @media (max-width: 968px) {
             .contact-grid,
             .faq-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
             .hero h1 {
@@ -390,19 +693,49 @@
             .faq-section {
                 padding: 3rem 2rem;
             }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact-form {
+                padding: 1.5rem;
+            }
+
+            .faq-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .info-card {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header>
+    <header id="header">
         <nav class="container">
             <div class="logo">EAF Project</div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="#resources">Resources</a></li>
-                <li><a href="#community">Community</a></li>
+                <li><a href="resources.html">Resources</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -411,8 +744,8 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Get in touch</h1>
-            <p class="hero-subtitle">Join our community, share your ideas, or collaborate with us to build the future of responsible AI</p>
+            <h1 class="fade-in-up">Get in touch</h1>
+            <p class="hero-subtitle fade-in-up" style="animation-delay: 0.2s;">Join our community, share your ideas, or collaborate with us to build the future of responsible AI</p>
         </div>
     </section>
 
@@ -421,7 +754,7 @@
         <div class="container">
             <div class="contact-grid">
                 <!-- Contact Form -->
-                <div class="contact-form">
+                <div class="contact-form scroll-animate">
                     <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; font-weight: 400;">Send us a message</h2>
                     
                     <div class="form-group">
@@ -461,19 +794,19 @@
 
                 <!-- Contact Info -->
                 <div class="contact-info">
-                    <div class="info-card">
+                    <div class="info-card scroll-animate" style="transition-delay: 0.1s;">
                         <h3><span class="info-card-icon">📧</span> Email</h3>
                         <p>For general inquiries and collaborations</p>
                         <a href="mailto:hello@eafproject.org">hello@eafproject.org</a>
                     </div>
 
-                    <div class="info-card">
+                    <div class="info-card scroll-animate" style="transition-delay: 0.2s;">
                         <h3><span class="info-card-icon">💼</span> Partnerships</h3>
                         <p>Interested in partnering with us or contributing to our mission</p>
                         <a href="mailto:partnerships@eafproject.org">partnerships@eafproject.org</a>
                     </div>
 
-                    <div class="info-card">
+                    <div class="info-card scroll-animate" style="transition-delay: 0.3s;">
                         <h3><span class="info-card-icon">🌍</span> Community</h3>
                         <p>Join our growing community of AI practitioners and enthusiasts</p>
                         <div class="social-links">
@@ -500,7 +833,7 @@
                         </div>
                     </div>
 
-                    <div class="info-card">
+                    <div class="info-card scroll-animate" style="transition-delay: 0.4s;">
                         <h3><span class="info-card-icon">📍</span> Location</h3>
                         <p>Remote-first organization<br>Global community presence</p>
                     </div>
@@ -511,7 +844,7 @@
 
     <!-- FAQ Section -->
     <section class="container">
-        <div class="faq-section">
+        <div class="faq-section scroll-animate">
             <h2>Frequently Asked Questions</h2>
             <div class="faq-grid">
                 <div class="faq-item">
@@ -537,9 +870,9 @@
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="container">
-            <h2>Ready to join the movement?</h2>
-            <p>Subscribe to our newsletter for updates, resources, and insights on responsible AI</p>
-            <a href="#" class="cta-button">Subscribe to Newsletter →</a>
+            <h2 class="scroll-animate">Ready to join the movement?</h2>
+            <p class="scroll-animate" style="transition-delay: 0.1s;">Subscribe to our newsletter for updates, resources, and insights on responsible AI</p>
+            <a href="#" class="cta-button scroll-animate" style="transition-delay: 0.2s;">Subscribe to Newsletter →</a>
         </div>
     </section>
 
@@ -556,10 +889,10 @@
                 </div>
                 <div class="footer-section">
                     <h4>Resources</h4>
-                    <a href="#">Playbooks</a>
-                    <a href="#">Experiments</a>
-                    <a href="#">Tutorials</a>
-                    <a href="#">Articles</a>
+                    <a href="resources.html">Playbooks</a>
+                    <a href="resources.html">Experiments</a>
+                    <a href="resources.html">Tutorials</a>
+                    <a href="resources.html">Articles</a>
                 </div>
                 <div class="footer-section">
                     <h4>Community</h4>
@@ -581,5 +914,113 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Scroll animation observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll-animate elements
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Enhanced scroll effects
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // Enhanced form validation and animation
+        const form = document.querySelector('.contact-form');
+        const inputs = form.querySelectorAll('input, textarea, select');
+
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateX(5px)';
+                this.parentElement.style.transition = 'transform 0.3s ease';
+            });
+
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateX(0)';
+            });
+
+            // Add typing effect
+            input.addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    this.style.borderColor = 'var(--cyan)';
+                    this.style.boxShadow = '0 0 0 3px rgba(0, 212, 255, 0.1)';
+                } else {
+                    this.style.borderColor = 'rgba(255,255,255,0.2)';
+                    this.style.boxShadow = 'none';
+                }
+            });
+        });
+
+        // Enhanced card hover effects
+        document.querySelectorAll('.info-card, .faq-item').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Social link enhanced interactions
+        document.querySelectorAll('.social-link').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.1)';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
 </body>
 </html>
